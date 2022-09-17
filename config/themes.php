@@ -5,4 +5,14 @@ $admin_theme = [
 ];
 
 $themes['admin'] = $admin_theme;
+
+// Simplix Theme
+$simplix_theme = [
+  "dir" => "simplix/",
+  "template" => "_blank.php"
+];
+
+$themes['simplix'] = $simplix_theme;
+
+
 define('THEMES', $themes);

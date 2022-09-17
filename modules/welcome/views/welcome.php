@@ -1,34 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Trongate</title>
-</head>
-<body>
-<section>
-    <h1>Hello World</h1>
-    <p>Module Path: modules/welcome/views/welcome.php</p>
-    <p>Documentation: <a href="http://www.trongate.io/documentation">http://www.trongate.io/documentation</a></p>
-</section>
-    <style>
-        body {
-            font-size: 2em;
-            background: #636ec6;
-            color: #ddd;
-            text-align: center;
-            font-family: "Lucida Console", Monaco, monospace;
-        }
+<!--=:: Section Welcome ::=-->
 
-        h1 {
-            margin-top: 2em;
-        }
-
-        h1, h2 {
-            text-transform: uppercase;
-        }
-
-        a { color: white; }
-
-    </style>
-</body>
-</html>
+<div class="px-4 py-5 my-5 text-center">
+  <h1 class="display-6">Hello World</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="mb-4">This is a blank canvas to start all your fun using Simplix</p>
+    <p class="mb-4">Module Path: modules/welcome/views/welcome.php</p>
+    <p class="mb-4">Documentation: <a href="http://www.trongate.io/documentation">http://www.trongate.io/documentation</a></p>
+  </div>
+</div>
