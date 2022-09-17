@@ -15,13 +15,13 @@
   <!--=:: Favicons ::=-->
 
   <!--=:: CSS Dependencies ::=-->
-  <link href="assets/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="<?= THEME_DIR ?>assets/bootstrap/bootstrap.min.css" rel="stylesheet">
 
   <!--=:: CSS Theme Syles ::=-->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="<?= THEME_DIR ?>assets/css/style.css" rel="stylesheet">
 
   <!--=:: Fonts ::=-->
-  <link href="assets/bootstrap/bootstrap-icons.css" rel="stylesheet">
+  <link href="<?= THEME_DIR ?>assets/bootstrap/bootstrap-icons.css" rel="stylesheet">
 
 </head>
 
@@ -50,23 +50,18 @@
 */
 ?>
 
-  <?php include_once('inc/header.php');?>
+  <?php
+    // Template::partials('partials/header', $data)
+    // Don't think partials work in themes so a simple include should do
+    include_once('inc/header.php');
+  ?>
 
   <!--=:: Carousel Slider ::=-->
 
   <!--=:: Content Section ::=-->
 
   <main id="main-content">
-
-   <!--=:: Sections ::=-->
-
-   <div class="px-4 py-5 my-5 text-center">
-     <h1 class="display-6">Hello World</h1>
-     <div class="col-lg-6 mx-auto">
-       <p class="mb-4">This is a blank canvas to start all your fun using Simplix</p>
-     </div>
-   </div>
-
+    <?= Template::display($data) ?>
   </main>
 
 <main>
@@ -74,7 +69,7 @@
   <?php include_once('inc/footer.php');?>
 
   <!--=:: JS Dependencies ::=--->
-  <script src="assets/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="<?= THEME_DIR ?>assets/bootstrap/bootstrap.bundle.min.js"></script>
 
   <!--=:: JS Theme ::=--->
 
