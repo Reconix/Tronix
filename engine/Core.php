@@ -7,7 +7,6 @@ class Core {
     protected $current_value = '';
 
     public function __construct() {
-
         if (strpos(ASSUMED_URL, '/vendor/')) {
             $this->serve_vendor_asset();
         } elseif(strpos(ASSUMED_URL, MODULE_ASSETS_TRIGGER) === false) {
@@ -15,7 +14,6 @@ class Core {
         } else {
             $this->serve_module_asset();
         }
-
     }
 
     private function serve_vendor_asset() {
@@ -204,34 +202,12 @@ class Core {
         }
 
         if (method_exists($this->current_controller, $this->current_method)) {
-            $this->csrf_protect();
             $target_method = $this->current_method;
             $this->current_controller = new $this->current_controller($this->current_module);
             $this->current_controller->$target_method($this->current_value);
         } else {
             $this->draw_error_page();
         }
-    }
-
-    private function csrf_protect() {
-        if (isset($_POST['submit'])) {
-            //make sure they have posted csrf_token
-            if (!isset($_POST['csrf_token'])) {
-                $this->csrf_block_request();
-            } else {
-                $result = password_verify(session_id(), $_POST['csrf_token']);
-                if ($result == false) {
-                    $this->csrf_block_request();
-                }
-
-                unset($_POST['csrf_token']);
-            }
-        }
-    }
-
-    private function csrf_block_request() {
-        header("location: ".BASE_URL);
-        die();
     }
 
     private function attempt_init_child_controller($controller_path) {
