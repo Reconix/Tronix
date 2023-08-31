@@ -3,7 +3,7 @@ class Trongate_administrators extends Trongate {
 
     //NOTE: the default username and password is 'admin' and 'admin'
     //private $secret_login_segment = 'tg-admin';
-    private $dashboard_home = 'trongate_administrators/manage'; //where to go after login
+    private $dashboard_home = 'trongate_pages/manage'; //where to go after login
 
     function login() {
 
@@ -315,7 +315,7 @@ class Trongate_administrators extends Trongate {
 
     function username_check($str) {
         //NOTE: You may wish to add other rules of your own here! 
-        $update_id =  segment(3);
+        $update_id =  (int) segment(3);
         $result = $this->model->get_one_where('username', $str, 'trongate_administrators');
         $error_msg = 'The username that you submitted is not available.';
 
