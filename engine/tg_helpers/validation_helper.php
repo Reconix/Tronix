@@ -402,32 +402,36 @@ class Validation_helper {
     private function valid_email($validation_data) {
         extract($validation_data);
 
-        if ((!filter_var($posted_value, FILTER_VALIDATE_EMAIL)) && ($posted_value !== '')) {
-            $this->form_submission_errors[$key][] = 'The '.$label.' field must contain a valid email address.';
-            return;
-        }
+        if ($posted_value !== '') {
 
-        // Check if the email address contains an @ symbol and a valid domain name
-        $at_pos = strpos($posted_value, '@');
-        if ($at_pos === false || $at_pos === 0) {
-            $this->form_submission_errors[$key][] = 'The '.$label.' is not properly formatted.';
-            return;
-        }
-
-        // Make sure the email address is not too long
-        if (strlen($posted_value) > 254) {
-            $this->form_submission_errors[$key][] = 'The '.$label.' is too long.';
-            return;
-        }
-
-        // Check if the internet is available
-        if($sock = @fsockopen('www.google.com', 80)) {
-           fclose($sock);
-            $domain_name = substr($posted_value, $at_pos + 1);
-            if (!checkdnsrr($domain_name, 'MX')) {
-                $this->form_submission_errors[$key][] = 'The '.$label.' field contains an invalid domain name';
+            if (!filter_var($posted_value, FILTER_VALIDATE_EMAIL)) {
+                $this->form_submission_errors[$key][] = 'The '.$label.' field must contain a valid email address.';
                 return;
             }
+
+            // Check if the email address contains an @ symbol and a valid domain name
+            $at_pos = strpos($posted_value, '@');
+            if ($at_pos === false || $at_pos === 0) {
+                $this->form_submission_errors[$key][] = 'The '.$label.' is not properly formatted.';
+                return;
+            }
+
+            // Make sure the email address is not too long
+            if (strlen($posted_value) > 254) {
+                $this->form_submission_errors[$key][] = 'The '.$label.' is too long.';
+                return;
+            }
+
+            // Check if the internet is available
+            if($sock = @fsockopen('www.google.com', 80)) {
+               fclose($sock);
+                $domain_name = substr($posted_value, $at_pos + 1);
+                if (!checkdnsrr($domain_name, 'MX')) {
+                    $this->form_submission_errors[$key][] = 'The '.$label.' field contains an invalid domain name';
+                    return;
+                }
+            }
+
         }
 
     }
@@ -606,7 +610,7 @@ class Validation_helper {
 
 }
 
-function validation_errors($opening_html=NULL, $closing_html=NULL) {
+function validation_errors($opening_html=null, $closing_html=null) {
 
     if (isset($_SESSION['form_submission_errors'])) {
 
@@ -637,8 +641,15 @@ function validation_errors($opening_html=NULL, $closing_html=NULL) {
             }
 
             if (!isset($opening_html)) {
-                $opening_html = '<p style="color: red;">';
-                $closing_html = '</p>';
+
+                if (defined('ERROR_OPEN') && defined('ERROR_CLOSE')) {
+                    $opening_html = ERROR_OPEN;
+                    $closing_html = ERROR_CLOSE;
+                } else {
+                    $opening_html = '<p style="color: red;">';
+                    $closing_html = '</p>';
+                }
+
             }
 
             foreach($validation_errors as $form_submission_error) {
